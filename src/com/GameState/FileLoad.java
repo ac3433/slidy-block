@@ -7,37 +7,35 @@ import java.io.FileReader;
 import com.Interaction.AbstractOutput;
 
 public class FileLoad {
-
-	private int sizeX, sizeY;
-	private int[][] board;
 	
 	private AbstractOutput output;
+	private int[][] board;
+	private int sizeX, sizeY;
 	
-	public void load(String filePath)
+	public void setBoardFromFile(String filePath)
 	{
 		try( BufferedReader in = new BufferedReader(new FileReader(filePath)))
 		{
 			String[] size = in.readLine().split(",");
 			
-			sizeX = Integer.parseInt(size[0]);
-			sizeY = Integer.parseInt(size[1]);
+			sizeX = Integer.parseInt(size[1]);
+			sizeY = Integer.parseInt(size[0]);
 			
 			board = new int[sizeX][sizeY];
 			
-			String[] row;
+			int linePosition = 0;
 			
-			while( (row = in.readLine().split(",")) != null )
+			for(String line = in.readLine(); line != null; line = in.readLine())
 			{
-				if(row.length != sizeX)
-					throw new Exception("Size is not the same as indicated");
-				
-				for(int i = 0; i < row.length; i++)
+				String[] values = line.split(",");
+				for(int i = 0; i < values.length; i++)
 				{
-					
+					board[linePosition][i] = Integer.parseInt(values[i]);
 				}
 				
+				linePosition++;
 			}
-			
+						
 		} 
 		catch (NumberFormatException e)
 		{
@@ -51,6 +49,10 @@ public class FileLoad {
 		{
 			output.displayOutput(String.format("Error: Cannot load this file path %s", filePath));
 		}
-
+		
 	}
+	
+	public int getBoardSizeX() { return sizeX; }
+	public int getBoardSizeY() { return sizeY; }
+	public int[][] getBoard() {return board; }
 }
