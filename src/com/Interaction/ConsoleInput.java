@@ -1,5 +1,6 @@
 package com.Interaction;
 
+@SuppressWarnings("serial")
 public class ConsoleInput extends AbstractInput {
 
 	@Override

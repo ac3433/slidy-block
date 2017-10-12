@@ -88,5 +88,53 @@ public abstract class AbstractBoard implements Serializable {
 		return false;
 	}
 	
-	public abstract Object clone();
+
+	public Object clone() {
+		AbstractBoard board = null;
+		try
+		{
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream(bos);
+			oos.writeObject(this);
+			oos.flush();
+			
+			ByteArrayInputStream bin = new ByteArrayInputStream(bos.toByteArray());
+			ObjectInputStream ois = new ObjectInputStream(bin);
+			board = (AbstractBoard) ois.readObject();
+		}
+		catch(Exception e)
+		{
+			output.displayOutput("Failed in cloning");
+		}
+
+		return board;
+		
+	}
+	
+	public boolean compareBoardState(int[][] board1 , int[][] board2)
+	{
+		try
+		{
+			if(board1.length != board2.length)
+				return false;
+			
+			for(int i = 0; i < board1.length; i++)
+			{
+				if(board1[i].length != board2[i].length)
+					return false;
+				
+				for(int j = 0; j < board1[i].length; j++)
+				{
+					if(board1[i][j] != board2[i][j])
+						return false;
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			output.displayOutput("Error: Comparing state");
+		}
+		
+		return true;
+	}
 }

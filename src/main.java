@@ -25,7 +25,11 @@ public class main {
 			}
 			
 			AbstractBoard board = new CustomBoard(input, output, args[0]);
+//			
+//			AbstractBoard board2 = (AbstractBoard) board.clone();
+//			board2.fillBlock(2, 3, -2345);
 			board.printBoard();
+//			board2.printBoard();
 		}
 		catch(Exception e)
 		{

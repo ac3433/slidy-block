@@ -2,10 +2,6 @@ package com.Board;
 
 import com.Interaction.*;
 import com.GameState.*;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 public class CustomBoard extends AbstractBoard{
 
@@ -27,31 +23,6 @@ public class CustomBoard extends AbstractBoard{
 		setBoard(board.getBoard());
 	}
 
-	@Override
-	public Object clone() {
-		AbstractBoard board = null;
-		try
-		{
-			ByteArrayOutputStream bos = new ByteArrayOutputStream();
-			ObjectOutputStream oos = new ObjectOutputStream(bos);
-			oos.writeObject(this);
-			oos.flush();
-			
-			ByteArrayInputStream bin = new ByteArrayInputStream(bos.toByteArray());
-			ObjectInputStream ois = new ObjectInputStream(bin);
-			board = (CustomBoard) ois.readObject();
-		}
-		catch(Exception e)
-		{
-			output.displayOutput("Failed in cloning");
-		}
-		finally
-		{
-			return board;
-		}
-		
-	}
-	
 
 
 }
