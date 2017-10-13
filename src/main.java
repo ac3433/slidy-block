@@ -1,6 +1,9 @@
 import java.io.File;
+import java.util.List;
+import java.util.Map;
 
 import com.Board.*;
+import com.GameState.BoardInteraction;
 import com.Interaction.*;
 
 public class main {
@@ -25,11 +28,19 @@ public class main {
 			}
 			
 			AbstractBoard board = new CustomBoard(input, output, args[0]);
-//			
+
+			BoardInteraction bi = new BoardInteraction(output);
+			AbstractBoard board1 = (AbstractBoard) bi.clone(board);
+			board1.getBoard()[2][3] = 300;
+			bi.printBoard(board);
+			bi.printBoard(board1);
+			
+			Map<Integer, List<String>> data = bi.getAllMoves(board);
+			//			
 //			AbstractBoard board2 = (AbstractBoard) board.clone();
 //			board2.fillBlock(2, 3, -2345);
-			board.printBoard();
-//			board2.printBoard();
+			
+			System.out.println("ets");
 		}
 		catch(Exception e)
 		{
