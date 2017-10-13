@@ -122,24 +122,6 @@ public class BoardInteraction {
 		return true;
 	}
 	
-	public enum Direction{
-		Up(-1,0),
-		Down(1,0),
-		Left(0, -1),
-		Right(0,1);
-		
-		private int dx, dy;
-		
-		private Direction(int dx, int dy)
-		{
-			this.dx = dx;
-			this.dy = dy;
-		}
-		
-		public int dx(){ return dx;}
-		public int dy(){ return dy;}
-	}
-	
 	public List<String> getMoveSet(AbstractBoard board, int peice)
 	{
 		List<String> dir = null;
@@ -202,16 +184,16 @@ public class BoardInteraction {
 		}
 			return dir;
 	}
-	
+		
 	//check the location if it's empty or the exit
 	private boolean canMove(int[][] board, Direction dir,int x1, int x2, int y1, int y2)
 	{
 		boolean move = true;
 		
-		x1 += dir.dx;
-		x2 += dir.dx;
-		y1 += dir.dy;
-		y2 += dir.dy;
+		x1 += dir.dx();
+		x2 += dir.dx();
+		y1 += dir.dy();
+		y2 += dir.dy();
 		
 		loop:
 		for(int i = x1; i <= x2; i++)
@@ -251,27 +233,72 @@ public class BoardInteraction {
 		
 	}
 	
-	public void applyMove(AbstractBoard board, String direction, int peice)
+	public boolean applyMove(AbstractBoard board, String direction, int peice)
 	{
-		Direction dirToMove;
-	
+		Direction frontToMove;
+		Direction backToMove;
+		if(board.getBoard() == null)
+		{
+			output.displayOutput("There is no board");
+			return false;
+		}
+		
 		
 		if(direction.toLowerCase().equals("left"))
 		{
-			dirToMove = Direction.Left;
+			frontToMove = Direction.Left;
+			backToMove = Direction.Right;
 		}
 		else if(direction.toLowerCase().equals("right"))
 		{
-			dirToMove = Direction.Right;
+			frontToMove = Direction.Right;
+			backToMove = Direction.Left;
 		}
 		else if(direction.toLowerCase().equals("up"))
 		{
-			dirToMove = Direction.Up;
+			frontToMove = Direction.Up;
+			backToMove = Direction.Down;
 		}
 		else if(direction.toLowerCase().equals("down"))
 		{
-			dirToMove = Direction.Down;
+			frontToMove = Direction.Down;
+			backToMove = Direction.Up;
+		}
+		else
+		{
+			output.displayOutput("direction doesn't exist");
+			return false;
 		}
 			
+		if(getMoveSet(board, peice).contains(direction.toLowerCase()))
+		{
+		}
+		
+		//insert check if the move is possible
+		//create these as function
+		//changing the value of the new side
+		//use existing code
+		//changing the value of the old side to 0
+		//use existing code
+		
+		return true;
+	}
+	
+	private void changeBlockPosition(int[][] board, Direction dir, int value ,int x1, int y1, int x2, int y2)
+	{
+		x1 += dir.dx();
+		x2 += dir.dx();
+		y1 += dir.dy();
+		y2 += dir.dy();
+		
+		for(int i = x1; i <= x2; i++)
+		{
+			for(int j = y1; j <= y2; j++)
+			{
+				board[i][j] = value;
+			}
+		}
+		
+		
 	}
 }
