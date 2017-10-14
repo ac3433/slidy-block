@@ -4,7 +4,8 @@ public enum Direction {
 	Up(-1,0),
 	Down(1,0),
 	Left(0, -1),
-	Right(0,1);
+	Right(0,1),
+	None(0,0); //none is to be use if it is uncertain of the direction... 
 	
 	private int dx, dy;
 	
@@ -17,6 +18,7 @@ public enum Direction {
 	public int dx(){ return dx;}
 	public int dy(){ return dy;}
 	
+	//this should be moved out... just leaving it here
 	public Direction mapStringDirection(String dir)
 	{
 		String d = dir.toLowerCase();
@@ -28,6 +30,8 @@ public enum Direction {
 			return Direction.Up;
 		else if(d.equals("down"))
 			return Direction.Down;
+		else if(d.equals("none"))
+			return Direction.None;
 		else
 			return null;
 	}
