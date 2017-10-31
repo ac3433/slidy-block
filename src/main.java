@@ -5,7 +5,12 @@ import java.util.Map;
 import java.util.Random;
 
 import com.Board.*;
+import com.DataStructure.AbstractSearch;
+import com.DataStructure.BFS;
+import com.DataStructure.DFS;
+import com.DataStructure.Node;
 import com.GameState.BoardInteraction;
+import com.GameState.Direction;
 import com.Interaction.*;
 
 public class main {
@@ -19,7 +24,7 @@ public class main {
 		{
 			if(args.length != 2)
 			{
-				output.displayOutput("Please enter a path in the argument [filePath] [N size]");
+				output.displayOutput("Please enter a path in the argument [filePath] [type of search tree: bfs or dfs]");
 				System.exit(0);
 			}
 			
@@ -29,42 +34,62 @@ public class main {
 				System.exit(0);
 			}
 			
-			
 			AbstractBoard board = new CustomBoard(input, output, args[0]);
 
 			//this class provide all the interaction need to be done on the board
 			BoardInteraction bi = new BoardInteraction(output);
 	
-			//saved the default board incase of reset
+			//saved the default board in case of reset
 			AbstractBoard everChangingBoard = (AbstractBoard) bi.clone(board);
 			
-			Random rand = new Random();
+			AbstractSearch as = null;
 			
-			bi.printBoard(everChangingBoard);
-			for(int i = 0; i < Integer.parseInt(args[1]); i++)
-			{
-				Map<Integer, List<String>> move = bi.getAllMoves(everChangingBoard);
-				
-				//randomly select a piece
-				List<Integer> pieces = new ArrayList<Integer>(move.keySet());
-				int piece = pieces.get(rand.nextInt(pieces.size()));
-				
-				//randomly select a direction from a given piece
-				List<String> dir = move.get(piece);
-				int dirVal = rand.nextInt(dir.size());
-				String direction = dir.get(dirVal);
-				
-				//get a new state with the move
-				everChangingBoard = bi.applyMoveCloning(everChangingBoard, direction, piece);
-				bi.normalizeBoard(everChangingBoard);
-				
-				output.displayOutput(String.format("(%s, %s)", piece, direction));
-				bi.printBoard(everChangingBoard);
-				
-				if(bi.checkWinState(everChangingBoard))
-					break;
-				
+			//switch what algorithm to run
+			switch(args[1].toLowerCase()){
+				case "bfs": as = new BFS(bi, output); break;
+				case "dfs": as = new DFS(bi, output); break;
 			}
+			
+			if(as == null)
+			{
+				output.displayOutput("Please enter bfs or dfs in the argument after the file argument");
+				System.exit(0);
+			}
+			
+			if(!as.findSolution(everChangingBoard))
+			{
+				output.displayOutput("There is no solution");
+			}
+			
+			
+			
+//			Random walk		
+//			Random rand = new Random();
+//			bi.printBoard(everChangingBoard);
+//			for(int i = 0; i < Integer.parseInt(args[1]); i++)
+//			{
+//				Map<Integer, List<String>> move = bi.getAllMoves(everChangingBoard);
+//				
+//				//randomly select a piece
+//				List<Integer> pieces = new ArrayList<Integer>(move.keySet());
+//				int piece = pieces.get(rand.nextInt(pieces.size()));
+//				
+//				//randomly select a direction from a given piece
+//				List<String> dir = move.get(piece);
+//				int dirVal = rand.nextInt(dir.size());
+//				String direction = dir.get(dirVal);
+//				
+//				//get a new state with the move
+//				everChangingBoard = bi.applyMoveCloning(everChangingBoard, direction, piece);
+//				bi.normalizeBoard(everChangingBoard);
+//				
+//				output.displayOutput(String.format("(%s, %s)", piece, direction));
+//				bi.printBoard(everChangingBoard);
+//				
+//				if(bi.checkWinState(everChangingBoard))
+//					break;
+//				
+//			}
 
 		}
 		catch(NumberFormatException e)

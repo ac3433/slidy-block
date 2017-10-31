@@ -248,7 +248,8 @@ public class BoardInteraction {
 		return move;
 	}
 	
-	//get all the list of moves for all pieces
+	//get all the list of moves for all pieces.
+	//stored as piece and the list of directional movement
 	public Map<Integer, List<String>> getAllMoves(AbstractBoard board)
 	{
 		Map<Integer, List<String>> moveSets = new HashMap<Integer, List<String>>();
@@ -324,7 +325,7 @@ public class BoardInteraction {
 			}
 		}
 		
-		//readjust the new position
+		//read just the new position
 		x1 += dir.dx();
 		x2 += dir.dx();
 		y1 += dir.dy();
