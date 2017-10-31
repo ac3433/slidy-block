@@ -24,6 +24,8 @@ public class BFS extends AbstractSearch{
 		Node root = new Node(board);
 		nextToVisit.add(root);
 		
+		int countNode = 0;
+		
 		while(!nextToVisit.isEmpty())
 		{
 			Node node = nextToVisit.remove();
@@ -33,7 +35,7 @@ public class BFS extends AbstractSearch{
 				String solution = getSolution(node);
 				output.displayOutput(solution);
 				bi.printBoard(node.getBoard());
-				
+				output.displayOutput("Node Explored: " + countNode);
 				return true;	
 			}	
 			//if the node game state is what we have been skip it
@@ -42,7 +44,7 @@ public class BFS extends AbstractSearch{
 			
 			//add the node we have visited
 			visited.add(node.getBoard());
-			
+			countNode++;
 			//this is to expand on the node of the children
 			populateChildNodes(node);
 			

@@ -49,6 +49,7 @@ public abstract class AbstractSearch {
 		LinkedList<Node> getNodesToRoot = new LinkedList<Node>();
 		getNodesToRoot.add(lastNode);
 		
+		int lengthToRoot = 0;
 		String solution = "";
 		
 		while(!getNodesToRoot.isEmpty())
@@ -59,8 +60,11 @@ public abstract class AbstractSearch {
 			{
 				getNodesToRoot.add(n.getParent());
 				solution = String.format("(%d, %s)\n", n.getPeice(), n.getDirection()) + solution;
+				lengthToRoot++;
 			}
 		}
+		
+		output.displayOutput("Length of solution: " + lengthToRoot);
 		
 		return solution;
 	}

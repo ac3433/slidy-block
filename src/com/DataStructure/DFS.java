@@ -17,18 +17,18 @@ public class DFS extends AbstractSearch{
 		HashSet<AbstractBoard> visited = new HashSet<AbstractBoard>();
 		
 		Node root = new Node(board);
-		
-		return findDFS(root, visited);
+		int nodeCount = 0;
+		return findDFS(root, visited, nodeCount);
 	}
 
 	//recursively find the solution
-	private boolean findDFS(Node node, HashSet<AbstractBoard> visited)
+	private boolean findDFS(Node node, HashSet<AbstractBoard> visited, int nodeCount)
 	{
 		if(isVisited(visited, node))
 			return false;
 		
 		visited.add(node.getBoard());
-		
+		nodeCount++;
 		if(bi.checkWinState(node.getBoard()))
 		{
 			//since it is recursive going back, i didn't need to get getSolution to trace back
@@ -36,7 +36,7 @@ public class DFS extends AbstractSearch{
 			String solution = getSolution(node);
 			output.displayOutput(solution);
 			bi.printBoard(node.getBoard());
-			
+			output.displayOutput("Node count: " + nodeCount);
 			return true;	
 		}
 		
@@ -45,7 +45,7 @@ public class DFS extends AbstractSearch{
 		
 		for(Node child : node.getChildrens())
 		{
-			if(findDFS(child, visited))
+			if(findDFS(child, visited, nodeCount))
 				return true;
 		}
 		

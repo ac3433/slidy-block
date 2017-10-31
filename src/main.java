@@ -55,8 +55,12 @@ public class main {
 				output.displayOutput("Please enter bfs or dfs in the argument after the file argument");
 				System.exit(0);
 			}
+			long startTime = System.currentTimeMillis();
+			boolean foundSolution = as.findSolution(everChangingBoard);
+			long endTime = System.currentTimeMillis();
 			
-			if(!as.findSolution(everChangingBoard))
+			output.displayOutput("Method execution time: " + (endTime - startTime) + " miliseconds");
+			if(!foundSolution)
 			{
 				output.displayOutput("There is no solution");
 			}
