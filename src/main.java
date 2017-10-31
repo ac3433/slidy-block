@@ -8,6 +8,7 @@ import com.Board.*;
 import com.DataStructure.AbstractSearch;
 import com.DataStructure.BFS;
 import com.DataStructure.DFS;
+import com.DataStructure.IDS;
 import com.DataStructure.Node;
 import com.GameState.BoardInteraction;
 import com.GameState.Direction;
@@ -48,6 +49,7 @@ public class main {
 			switch(args[1].toLowerCase()){
 				case "bfs": as = new BFS(bi, output); break;
 				case "dfs": as = new DFS(bi, output); break;
+				case "ids": as = new IDS(bi, output); break;
 			}
 			
 			if(as == null)

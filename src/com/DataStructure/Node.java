@@ -13,6 +13,7 @@ public class Node {
 	private HashSet<Node> children;
 	private Direction dir;
 	private int peice;
+	private int depth;
 	
 	public Node(AbstractBoard board)
 	{
@@ -29,6 +30,11 @@ public class Node {
 		children = new HashSet<Node>();
 	}
 	
+	//this could be part of the constructor, but did not want to add requirement to bfs and dfs
+	public void addDepth(int depth)
+	{
+		this.depth = depth;
+	}
 	
 	public void addChild(Node child)
 	{
@@ -59,6 +65,11 @@ public class Node {
 	public String getDirection()
 	{
 		return dir.name();
+	}
+	
+	public int getDepth()
+	{
+		return depth;
 	}
 }
 
